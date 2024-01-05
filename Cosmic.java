@@ -20,8 +20,8 @@ public class Cosmic extends JPanel implements KeyListener{
     private int possibleMovesX;
     private int possibleMovesY;
     private boolean gameRunning = true;
-    private int botSpeed=100;
-    private int botSpawnRate=100;
+    private int botSpeed=10;
+    private int botSpawnRate=10;
     private int gameLvl;
 
   
@@ -69,24 +69,24 @@ private void runGame(){
                 botSpeed=8;
             }
             if(gameLvl==15){
-                botSpawnRate=60;
-                botSpeed=60;
+                botSpawnRate=6;
+                botSpeed=6;
             }
             if(gameLvl==20){
-                botSpawnRate=50;
-                botSpeed=50;
+                botSpawnRate=5;
+                botSpeed=5;
             }
             if(gameLvl==25){
-                botSpawnRate=30;
-                botSpeed=30;
+                botSpawnRate=3;
+                botSpeed=3;
             }
             if(gameLvl==30){
-                botSpawnRate=20;
-                botSpeed=20;
+                botSpawnRate=2;
+                botSpeed=2;
             }
              if(gameLvl==35){
-                botSpawnRate=10;
-                botSpeed=10;
+                botSpawnRate=1;
+                botSpeed=1;
             }
             
         
