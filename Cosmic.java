@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Random;
 import java.awt.event.KeyEvent;
 
 public class Cosmic extends JPanel implements KeyListener{
@@ -19,6 +20,7 @@ public class Cosmic extends JPanel implements KeyListener{
     private int possibleMovesX;
     private int possibleMovesY;
     private boolean gameRunning;
+
   
     
    //(1920/2)+(360/2);
@@ -27,6 +29,7 @@ public class Cosmic extends JPanel implements KeyListener{
     private int myWindowWidth = 900;
     private int myWindowHeight = 900;
     ArrayList<Bot> bots = new ArrayList<Bot>();
+    private Random randGen = new Random();
 
     
 public Cosmic(){
@@ -123,7 +126,7 @@ public void paintComponent (Graphics g) {
        g.fillRect(0, 0, 10000, 10000);
         
         g.drawImage (RocketImage, rocketX, rocketY, 50, 50, this);
-        drawBots();
+        drawBots(g);
     }        
 private void loadImages(){
         String curDir = System.getProperty("user.dir");
@@ -144,11 +147,16 @@ private void Startprogress(){
 }
 private void drawBots(Graphics g){
     for(int x = 0; x<bots.size(); x++){
-        this.draw(bots.get(x), g);
+        this.drawBot(bots.get(x), g);
 
      } 
 }
-private void drawBot
+private void drawBot(Bot bot, Graphics g){
+    int x = randGen.nextInt(900);
+    int y = randGen.nextInt(900);
+    g.fillOval(x, y, 20, 20);
+
+}
     
      
 public static void main(String[] args) {
