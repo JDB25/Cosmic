@@ -12,17 +12,16 @@ public class Cosmic extends JPanel implements KeyListener{
     private Image RocketImage;
     private Image EndImage;
     
-    private int veloX;
-    private int veloY;
+    private int veloX=0;
+    private int veloY=0;
     private int rocketX = (900/2)-(20);
     private int rocketY = (900/2)-(20);
-    private int rocketFacing;
-    private int possibleMovesX;
-    private int possibleMovesY;
     private boolean gameRunning = true;
     private int botSpeed=10;
     private int botSpawnRate=10;
-    private int gameLvl;
+    private int gameLvl=0;
+    private int findingMid=13;
+    private int offset = 1;
 
   
     
@@ -33,6 +32,17 @@ public class Cosmic extends JPanel implements KeyListener{
     private int myWindowHeight = 900;
     ArrayList<Bot> bots = new ArrayList<Bot>();
     private Random randGen = new Random();
+public void init(){
+    
+   
+ 
+
+   
+    
+
+   
+    
+}
 
     
 public Cosmic(){
@@ -46,7 +56,8 @@ public Cosmic(){
 
         easel.addKeyListener(this);
         setVisible(true);
-       runGame(); 
+       runGame();
+       
 
 
 }
@@ -58,12 +69,14 @@ private void runGame(){
             int x = rando();
             int y = rando();
             bots.add(new Bot(x, y));
-            rocketFloat();   
+            if(gameRunning){
+            rocketFloat(); } 
             repaint();
             delay(botSpawnRate);}
             if(gameRunning){
             gameLvl++;
-        System.out.println(gameLvl);}
+        //System.out.println(gameLvl);
+    }
             if(gameLvl==10){
                 botSpawnRate=8;
                 botSpeed=8;
@@ -94,6 +107,7 @@ private void runGame(){
         if(gameRunning){
             delay(botSpeed);
             moveBots();}
+            if(gameRunning){rocketFloat();}
         
         }}}}
 
@@ -129,8 +143,48 @@ private void loadImages(){
 
 
 private void rocketFloat(){
-if (veloX==1);
-rocketX++;
+if (veloX==1&&rocketX+72<900){
+    rocketX++;
+}
+if (veloX==-1&&rocketX-2>0){
+    rocketX--;
+}
+if (veloX==2&&rocketX+72<900){
+    rocketX+=2;
+}
+if (veloX==-2&&rocketX-2>0){
+    rocketX-=2;
+}
+
+
+if(veloY==1&&rocketY+82<900){
+    rocketY++;
+}
+if(veloY==-1&&rocketY-2>0){
+    rocketY--;
+}
+
+if(veloY==2&&rocketY+82<900){
+    rocketY+=2;
+}
+if(veloY==-2&&rocketY-2>0){
+    rocketY-=2;
+}
+
+if(rocketX+72==899||rocketX==1){
+    veloX=0;
+}
+if(rocketY+82==900||rocketY-2==-1){
+    veloY=0;
+    
+}
+
+
+repaint();
+
+
+
+
 
 }
 private void moveBots(){
@@ -144,38 +198,38 @@ private void moveBots(){
     
 }
 private void moveBot(Bot bot){
-    if(bot.getX()<rocketX&&bot.getY()<rocketY){
+    if(bot.getX()<rocketX+findingMid+offset&&bot.getY()<rocketY+findingMid){
         bot.move(bot.getX()+1,bot.getY()+1);
         
     }
-    if(bot.getX()>rocketX&&bot.getY()<rocketY){
+    if(bot.getX()>rocketX+findingMid+offset&&bot.getY()<rocketY+findingMid){
         bot.move(bot.getX()-1,bot.getY()+1);
        
     }
-    if(bot.getX()<rocketX&&bot.getY()>rocketY){
+    if(bot.getX()<rocketX+findingMid+offset&&bot.getY()>rocketY+findingMid){
         bot.move(bot.getX()+1,bot.getY()-1);
        
     }
-    if(bot.getX()>rocketX&&bot.getY()>rocketY){
+    if(bot.getX()>rocketX+findingMid+offset&&bot.getY()>rocketY+findingMid){
         bot.move(bot.getX()-1,bot.getY()-1);
        
     }
-    if(bot.getX()==rocketX&&bot.getY()==rocketY){
+    if((bot.getX()==rocketX+findingMid+offset&&bot.getY()==rocketY+findingMid)||(bot.getX()==rocketX+findingMid+offset+1&&bot.getY()==rocketY+findingMid)){
         gameRunning=false;
     }
-    if(bot.getX()==rocketX&&bot.getY()>rocketY){
+    if(bot.getX()==rocketX+findingMid+offset&&bot.getY()>rocketY+findingMid){
         bot.move(bot.getX(),bot.getY()-1);
        
     }
-    if(bot.getX()==rocketX&&bot.getY()<rocketY){
+    if(bot.getX()==rocketX+findingMid+offset&&bot.getY()<rocketY+findingMid){
         bot.move(bot.getX(),bot.getY()+1);
        
     }
-    if(bot.getX()>rocketX&&bot.getY()==rocketY){
+    if(bot.getX()>rocketX+findingMid+offset&&bot.getY()==rocketY+findingMid){
         bot.move(bot.getX()-1,bot.getY());
        
     }
-    if(bot.getX()<rocketX&&bot.getY()==rocketY){
+    if(bot.getX()<rocketX+findingMid+offset&&bot.getY()==rocketY+findingMid){
         bot.move(bot.getX()+1,bot.getY()-1);
        
     }
@@ -206,35 +260,40 @@ private void drawBot(Bot bot, Graphics g){
 
 public void keyTyped(KeyEvent e) {}
 public void keyPressed(KeyEvent e) {
+    if((e.getKeyCode() == KeyEvent.VK_ENTER)&&gameRunning==false){
+        
+       init();
+    }
+
 
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
         
-        if(gameRunning){
+        if(gameRunning&&(veloX<2)){
             veloX++;
            
         }
-        veloX++;
+       
     }
     if (e.getKeyCode() == KeyEvent.VK_LEFT) {
        
-        if(gameRunning){
-            rocketX-=7;
+        if(gameRunning&&(veloX>-2)){
+            veloX--;
            
         }
-        veloX--;
+      
 
     }
     if (e.getKeyCode() == KeyEvent.VK_DOWN) {
        
-        if(gameRunning)
-            rocketY+=7;
+        if(gameRunning&&(veloY<2))
+            veloY++;
            
        
     }
     if (e.getKeyCode() == KeyEvent.VK_UP) {
       
-        if(gameRunning)
-            rocketY-=7;
+        if(gameRunning&&(veloY>-2))
+            veloY--;;
            
         
     }
@@ -242,31 +301,25 @@ public void keyPressed(KeyEvent e) {
 
 }    
 public void keyReleased(KeyEvent e) {
-    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-       if(gameRunning)
-        rocketX+=7;
+    // if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+       
         
-    }
-    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+    // }
+    // if (e.getKeyCode() == KeyEvent.VK_LEFT) {
       
-    if(gameRunning)
-        rocketX-=7;
+   
        
     
 
-    }
-    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+    // }
+    // if (e.getKeyCode() == KeyEvent.VK_DOWN) {
       
-        if(gameRunning)
-            rocketY+=7;
-            
-    }
-    if (e.getKeyCode() == KeyEvent.VK_UP) {
+    // }
+    // if (e.getKeyCode() == KeyEvent.VK_UP) {}
         
-        if(gameRunning)
-            rocketY-=7;
+       
           
-    }
+    
     repaint();
 }     
 
