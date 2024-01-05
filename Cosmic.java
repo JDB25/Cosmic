@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 
 public class Cosmic extends JPanel implements KeyListener{
@@ -17,6 +18,7 @@ public class Cosmic extends JPanel implements KeyListener{
     private int rocketFacing;
     private int possibleMovesX;
     private int possibleMovesY;
+    private boolean gameRunning;
   
     
    //(1920/2)+(360/2);
@@ -24,9 +26,10 @@ public class Cosmic extends JPanel implements KeyListener{
     
     private int myWindowWidth = 900;
     private int myWindowHeight = 900;
+    ArrayList<Bot> bots = new ArrayList<Bot>();
 
     
-    public Cosmic(){
+public Cosmic(){
         
         loadImages();
         Frame easel = new JFrame();      
@@ -40,19 +43,9 @@ public class Cosmic extends JPanel implements KeyListener{
         
        
         setVisible(true);
-        
-        for(int i=0; i<=5000; i++){
-            
-            
-            
-        }
-
-       
 
 }
 public void keyTyped(KeyEvent e) {}
-
-
 public void keyPressed(KeyEvent e) {
 
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -96,7 +89,6 @@ private void delay(int ms) {
        ex.printStackTrace();
     }
  }
-
 public void keyReleased(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
         System.out.println("Right key Released");
@@ -125,17 +117,14 @@ public void keyReleased(KeyEvent e) {
     }
     repaint();
 }
-
 public void paintComponent (Graphics g) {
        super.paintComponent(g);
        g.setColor(Color.black);
        g.fillRect(0, 0, 10000, 10000);
         
         g.drawImage (RocketImage, rocketX, rocketY, 50, 50, this);
-        
-    }
-        
-
+        drawBots();
+    }        
 private void loadImages(){
         String curDir = System.getProperty("user.dir");
         System.out.println(curDir);
@@ -143,14 +132,25 @@ private void loadImages(){
         MountainImage = new ImageIcon(curDir + "/images/Box.png","").getImage ( );
         
     }
+private void runGame(){
+    Startprogress();
 
+}
+private void Startprogress(){
+    while(gameRunning==true){
+
+    }
+
+}
+private void drawBots(Graphics g){
+    for(int x = 0; x<bots.size(); x++){
+        this.draw(bots.get(x), g);
+
+     } 
+}
+private void drawBot
     
      
-
-
-
-
-
 public static void main(String[] args) {
    new Cosmic();
 }
