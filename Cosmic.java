@@ -45,13 +45,14 @@ public Cosmic(){
         setVisible(true);
        runGame(); 
 
+
 }
 public void keyTyped(KeyEvent e) {}
 public void keyPressed(KeyEvent e) {
 
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
         
-        if(possibleMovesX<100){
+        if(gameRunning){
             rocketX+=7;
             possibleMovesX--;
         }
@@ -59,7 +60,7 @@ public void keyPressed(KeyEvent e) {
     }
     if (e.getKeyCode() == KeyEvent.VK_LEFT) {
        
-        if(possibleMovesX<100){
+        if(gameRunning){
             rocketX-=7;
             possibleMovesX--;
         }
@@ -68,17 +69,17 @@ public void keyPressed(KeyEvent e) {
     }
     if (e.getKeyCode() == KeyEvent.VK_DOWN) {
        
-        if(possibleMovesY<100){
+        if(gameRunning)
             rocketY+=7;
             possibleMovesY--;
-        }
+       
     }
     if (e.getKeyCode() == KeyEvent.VK_UP) {
       
-        if(possibleMovesY<100){
+        if(gameRunning)
             rocketY-=7;
             possibleMovesY--;
-        }
+        
     }
     repaint();
 
@@ -92,13 +93,13 @@ private void delay(int ms) {
  }
 public void keyReleased(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-       
+       if(gameRunning)
         rocketX+=7;
         possibleMovesX++;
     }
     if (e.getKeyCode() == KeyEvent.VK_LEFT) {
       
-        
+    if(gameRunning)
         rocketX-=7;
         possibleMovesX++;
     
@@ -106,13 +107,13 @@ public void keyReleased(KeyEvent e) {
     }
     if (e.getKeyCode() == KeyEvent.VK_DOWN) {
       
-        
+        if(gameRunning)
             rocketY+=7;
             possibleMovesY++;
     }
     if (e.getKeyCode() == KeyEvent.VK_UP) {
         
-        
+        if(gameRunning)
             rocketY-=7;
             possibleMovesY++;
     }
@@ -134,31 +135,83 @@ private void loadImages(){
         
     }
 private void runGame(){
-    Startprogress();
+    while(gameRunning==true){
+    for(int d=0; d<10000; d++){
+          if(gameRunning){  
+            int x = rando();
+            int y = rando();
+            bots.add(new Bot(x, y));   
+            repaint();
+            delay(60);}
+        
+        for(int f=0; f<100; f++){
+        if(gameRunning){
+            delay(40);
+            moveBots();}
+        
+        }
+    }}
+
+        
+       
+
 
 }
 private int rando(){
-    int i = randGen.nextInt(900);
+    int i = randGen.nextInt(800);
     return i;
 }
-private void Startprogress(){
+
+
+
+private void moveBots(){
+    System.out.println("NOOOOO");
+  
+       for(int x = 0; x<bots.size(); x++){
+        this.moveBot(bots.get(x));
+
+     } 
+     
     
-    while(gameRunning==true){
-        int x = randGen.nextInt(900);
-        int y = randGen.nextInt(900);
-        System.out.println(x);
-        System.out.println(y);
-
-        bots.add(new Bot(x, y));
-        System.out.println("AHHHHHHHH");
-         repaint();
-        delay(60);
-       
-
-
-       
-
+}
+private void moveBot(Bot bot){
+    if(bot.getX()<rocketX&&bot.getY()<rocketY){
+        bot.move(bot.getX()+1,bot.getY()+1);
+        System.out.println("uga");
     }
+    if(bot.getX()>rocketX&&bot.getY()<rocketY){
+        bot.move(bot.getX()-1,bot.getY()+1);
+        System.out.println("uga");
+    }
+    if(bot.getX()<rocketX&&bot.getY()>rocketY){
+        bot.move(bot.getX()+1,bot.getY()-1);
+        System.out.println("uga");
+    }
+    if(bot.getX()>rocketX&&bot.getY()>rocketY){
+        bot.move(bot.getX()-1,bot.getY()-1);
+        System.out.println("uga");
+    }
+    if(bot.getX()==rocketX&&bot.getY()==rocketY){
+        gameRunning=false;
+    }
+    if(bot.getX()==rocketX&&bot.getY()>rocketY){
+        bot.move(bot.getX(),bot.getY()-1);
+        System.out.println("uga");
+    }
+    if(bot.getX()==rocketX&&bot.getY()<rocketY){
+        bot.move(bot.getX(),bot.getY()+1);
+        System.out.println("uga");
+    }
+    if(bot.getX()>rocketX&&bot.getY()==rocketY){
+        bot.move(bot.getX()-1,bot.getY());
+        System.out.println("uga");
+    }
+    if(bot.getX()<rocketX&&bot.getY()==rocketY){
+        bot.move(bot.getX()+1,bot.getY()-1);
+        System.out.println("uga");
+    }
+
+    repaint();
 
 }
 private void drawBots(Graphics g){
@@ -168,12 +221,12 @@ private void drawBots(Graphics g){
      } 
 }
 private void drawBot(Bot bot, Graphics g){
-    int BotX = bot.getX();
-    int BotY = bot.getY();
+    int BotX1 = bot.getX();
+    int BotY1 = bot.getY();
     g.setColor(Color.white);
-    g.fillOval(BotX, BotY, 20, 20);
+    g.fillOval(BotX1, BotY1, 20, 20);
     g.setColor(Color.red);
-    g.drawOval(BotX, BotY, 20, 20);
+    g.drawOval(BotX1, BotY1, 20, 20);
 
 }
     
