@@ -10,7 +10,7 @@ public class Cosmic extends JPanel implements KeyListener{
  
 
     private Image RocketImage;
-    private Image MountainImage;
+    private Image EndImage;
     
     private int veloX;
     private int veloY;
@@ -126,12 +126,16 @@ public void paintComponent (Graphics g) {
         
         g.drawImage (RocketImage, rocketX, rocketY, 50, 50, this);
         drawBots(g);
+        if(gameRunning==false){
+            g.drawImage(EndImage, 40, 0, 800, 800, this);
+
+        }
     }        
 private void loadImages(){
         String curDir = System.getProperty("user.dir");
         System.out.println(curDir);
         RocketImage = new ImageIcon(curDir + "/images/Rocket.png","").getImage ( );
-        MountainImage = new ImageIcon(curDir + "/images/Box.png","").getImage ( );
+        EndImage = new ImageIcon(curDir + "/images/End.png","").getImage ( );
         
     }
 private void runGame(){
@@ -142,11 +146,11 @@ private void runGame(){
             int y = rando();
             bots.add(new Bot(x, y));   
             repaint();
-            delay(60);}
+            delay(10);}
         
         for(int f=0; f<100; f++){
         if(gameRunning){
-            delay(40);
+            delay(10);
             moveBots();}
         
         }
