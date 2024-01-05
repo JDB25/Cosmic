@@ -19,7 +19,7 @@ public class Cosmic extends JPanel implements KeyListener{
     private int rocketFacing;
     private int possibleMovesX;
     private int possibleMovesY;
-    private boolean gameRunning;
+    private boolean gameRunning = true;
 
   
     
@@ -42,26 +42,24 @@ public Cosmic(){
         easel.setVisible (true);
 
         easel.addKeyListener(this);
-       
-        
-       
         setVisible(true);
+       runGame(); 
 
 }
 public void keyTyped(KeyEvent e) {}
 public void keyPressed(KeyEvent e) {
 
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-        System.out.println("Right key pressed");
-        if(possibleMovesX>0){
+        
+        if(possibleMovesX<100){
             rocketX+=7;
             possibleMovesX--;
         }
         veloX++;
     }
     if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-        System.out.println("Left key pressed");
-        if(possibleMovesX>0){
+       
+        if(possibleMovesX<100){
             rocketX-=7;
             possibleMovesX--;
         }
@@ -69,15 +67,15 @@ public void keyPressed(KeyEvent e) {
 
     }
     if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-        System.out.println("DOWN key pressed");
-        if(possibleMovesY>0){
+       
+        if(possibleMovesY<100){
             rocketY+=7;
             possibleMovesY--;
         }
     }
     if (e.getKeyCode() == KeyEvent.VK_UP) {
-        System.out.println("DOWN key pressed");
-        if(possibleMovesY>0){
+      
+        if(possibleMovesY<100){
             rocketY-=7;
             possibleMovesY--;
         }
@@ -94,12 +92,12 @@ private void delay(int ms) {
  }
 public void keyReleased(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-        System.out.println("Right key Released");
+       
         rocketX+=7;
         possibleMovesX++;
     }
     if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-        System.out.println("Left key Released");
+      
         
         rocketX-=7;
         possibleMovesX++;
@@ -107,13 +105,13 @@ public void keyReleased(KeyEvent e) {
 
     }
     if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-        System.out.println("DOWN key pressed");
+      
         
             rocketY+=7;
             possibleMovesY++;
     }
     if (e.getKeyCode() == KeyEvent.VK_UP) {
-        System.out.println("DOWN key pressed");
+        
         
             rocketY-=7;
             possibleMovesY++;
@@ -139,8 +137,20 @@ private void runGame(){
     Startprogress();
 
 }
+private int rando(){
+    int i = randGen.nextInt(900);
+    return i;
+}
 private void Startprogress(){
     while(gameRunning==true){
+        int x = randGen.nextInt(900);
+        int y = randGen.nextInt(900);
+        System.out.println
+        bots.add(new Bot(x, y));
+        System.out.println("AHHHHHHHH");
+         repaint();
+        delay(90);
+       
 
     }
 
@@ -152,9 +162,12 @@ private void drawBots(Graphics g){
      } 
 }
 private void drawBot(Bot bot, Graphics g){
-    int x = randGen.nextInt(900);
-    int y = randGen.nextInt(900);
-    g.fillOval(x, y, 20, 20);
+    int BotX = bot.getX();
+    int BotY = bot.getY();
+    g.setColor(Color.white);
+    g.fillOval(BotX, BotY, 20, 20);
+    g.setColor(Color.red);
+    g.drawOval(BotX, BotY, 20, 20);
 
 }
     

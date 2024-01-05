@@ -6,5 +6,11 @@ public class Bot {
         this.BotX=BotX;
         this.BotY=BotY;
     }
+public int getX(){
+    return BotX;
+}
+public int getY(){
+    return BotX;
+}
     
 }
