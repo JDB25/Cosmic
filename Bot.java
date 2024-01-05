@@ -10,7 +10,7 @@ public int getX(){
     return BotX;
 }
 public int getY(){
-    return BotX;
+    return BotY;
 }
     
 }

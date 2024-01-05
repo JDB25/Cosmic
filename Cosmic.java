@@ -142,14 +142,20 @@ private int rando(){
     return i;
 }
 private void Startprogress(){
+    
     while(gameRunning==true){
         int x = randGen.nextInt(900);
         int y = randGen.nextInt(900);
-        System.out.println
+        System.out.println(x);
+        System.out.println(y);
+
         bots.add(new Bot(x, y));
         System.out.println("AHHHHHHHH");
          repaint();
-        delay(90);
+        delay(60);
+       
+
+
        
 
     }
