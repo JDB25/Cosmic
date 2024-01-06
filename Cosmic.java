@@ -22,6 +22,7 @@ public class Cosmic extends JPanel implements KeyListener{
     private int gameLvl=0;
     private int findingMid=13;
     private int offset = 1;
+    private int difficulty = 1;
 
   
     
@@ -32,17 +33,6 @@ public class Cosmic extends JPanel implements KeyListener{
     private int myWindowHeight = 900;
     ArrayList<Bot> bots = new ArrayList<Bot>();
     private Random randGen = new Random();
-public void init(){
-    
-   
- 
-
-   
-    
-
-   
-    
-}
 
     
 public Cosmic(){
@@ -56,12 +46,14 @@ public Cosmic(){
 
         easel.addKeyListener(this);
         setVisible(true);
-       runGame();
+        delay(500);
+        System.out.println(difficulty);
+       runGame(difficulty);
        
 
 
 }
-private void runGame(){
+private void runGame(int difficulty){
 
     while(gameRunning==true){
     for(int d=0; d<10000; d++){
@@ -73,6 +65,7 @@ private void runGame(){
             rocketFloat(); } 
             repaint();
             delay(botSpawnRate);}
+            
             if(gameRunning){
             gameLvl++;
         //System.out.println(gameLvl);
@@ -105,7 +98,7 @@ private void runGame(){
         
         for(int f=0; f<100; f++){
         if(gameRunning){
-            delay(botSpeed);
+            delay(botSpeed*difficulty);
             moveBots();}
             if(gameRunning){rocketFloat();}
         
@@ -260,11 +253,32 @@ private void drawBot(Bot bot, Graphics g){
 
 public void keyTyped(KeyEvent e) {}
 public void keyPressed(KeyEvent e) {
-    if((e.getKeyCode() == KeyEvent.VK_ENTER)&&gameRunning==false){
+   if (e.getKeyCode() == KeyEvent.VK_ENTER) {
         
-       init();
+        if(difficulty>1){
+            difficulty--;
+            System.out.println("diffdown");
+           
+        }
+       
     }
-
+    if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+        
+        if(difficulty<5){
+            difficulty++;
+            System.out.println("diffUP");
+           
+        }
+       
+    }
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        
+        if(gameRunning&&(veloX<2)){
+            veloX++;
+           
+        }
+       
+    }
 
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
         
