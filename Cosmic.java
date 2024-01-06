@@ -46,7 +46,7 @@ public Cosmic(){
 
         easel.addKeyListener(this);
         setVisible(true);
-        delay(500);
+        delay(5000);
         System.out.println(difficulty);
        runGame(difficulty);
        
